@@ -7,10 +7,20 @@
 <title>무용연습실 대관 일정표</title>
 <style>
 *{box-sizing:border-box}body{margin:0;color:#23211f;background:linear-gradient(135deg,#f7efe5,#fbf8f2 45%,#efe5d7);font-family:Arial,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;min-height:100vh}.shell{max-width:1280px;margin:auto;padding:36px 24px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.18em;color:#a64036;margin-bottom:12px}h1{font-size:clamp(25px,4vw,38px);margin:0}p,footer{color:#756f69;line-height:1.6}.card{background:#fffdfa;border:1px solid #e6ddd2;border-radius:20px;padding:14px;box-shadow:0 18px 55px #4531231f;margin-top:24px}iframe{display:block;width:100%;height:780px;border:0;border-radius:8px}footer{margin-top:16px;font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}a{color:#a64036}@media(max-width:600px){.shell{padding:24px 10px}.card{padding:5px;border-radius:12px}iframe{height:720px}}
+.views{display:flex;gap:10px;margin:20px 0 0}.views button{font:inherit;font-weight:700;border:1px solid #e6ddd2;border-radius:999px;padding:12px 20px;background:#fffdfa;color:#23211f;cursor:pointer}.views button[aria-pressed="true"]{background:#a64036;border-color:#a64036;color:white}.views button:focus-visible{outline:3px solid #d9a853;outline-offset:3px}
 </style>
 </head>
 <body><main class="shell">
 <header><div class="eyebrow">THE L DANCE HALL</div><h1>무용연습실 대관 일정표</h1><p>월별·주별 대관 일정을 확인하세요. 일정을 누르면 제목과 상세 내용을 볼 수 있습니다.</p></header>
-<section class="card" aria-label="공개 대관 캘린더"><iframe title="The L Dance Hall 공개 대관 일정표" src="https://calendar.google.com/calendar/embed?src=theldancehall%40gmail.com&amp;ctz=Asia%2FSeoul&amp;hl=ko&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0" loading="eager"></iframe></section>
-<footer><span>한국 시간 기준 · 일정은 Google 캘린더에서 관리합니다.</span><a href="https://calendar.google.com/calendar/embed?src=theldancehall%40gmail.com&amp;ctz=Asia%2FSeoul&amp;hl=ko" target="_blank" rel="noopener">캘린더 크게 보기 ↗</a></footer>
-</main></body></html>
+<nav class="views" aria-label="캘린더 보기 선택"><button type="button" data-mode="MONTH" aria-pressed="false">월별로 보기</button><button type="button" data-mode="WEEK" aria-pressed="true">주별로 보기</button></nav>
+<section class="card" aria-label="공개 대관 캘린더"><iframe id="rentalCalendar" title="The L Dance Hall 공개 대관 일정표" src="https://calendar.google.com/calendar/embed?src=theldancehall%40gmail.com&amp;ctz=Asia%2FSeoul&amp;hl=ko&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;showTabs=0&amp;mode=WEEK" loading="eager"></iframe></section>
+<footer><span>한국 시간 기준 · 일정은 Google 캘린더에서 관리합니다.</span><a id="calendarFull" href="https://calendar.google.com/calendar/embed?src=theldancehall%40gmail.com&amp;ctz=Asia%2FSeoul&amp;hl=ko&amp;mode=WEEK" target="_blank" rel="noopener">캘린더 크게 보기 ↗</a></footer>
+</main><script>
+const frame=document.getElementById('rentalCalendar'),full=document.getElementById('calendarFull');
+document.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{
+if(button.getAttribute('aria-pressed')==='true')return;
+const url=new URL(frame.src);url.searchParams.set('mode',button.dataset.mode);frame.src=url.href;
+const fullUrl=new URL(full.href);fullUrl.searchParams.set('mode',button.dataset.mode);full.href=fullUrl.href;
+document.querySelectorAll('[data-mode]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+}));
+</script></body></html>
